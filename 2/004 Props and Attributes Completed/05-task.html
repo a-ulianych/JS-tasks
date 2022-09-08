@@ -29,6 +29,12 @@
             age: "25",
         }
 
+        let divs = document.querySelectorAll("[data-bind]");
+
+        for (const div of divs) {
+            const value = div.dataset.bind;
+            div.append(user[value]);
+        }
     </script>
 </body>
 
