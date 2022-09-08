@@ -21,6 +21,10 @@
             min-width: 250px;
         }
 
+        .less-friends {
+            border: 2px solid red;
+        }
+
         .user-card p,
         .user-card ul {
             padding: 0;
@@ -493,7 +497,7 @@
                 ul.insertAdjacentHTML("beforeend", `<li>${friend.name}</li>`);
             }
             if (user.friends.length < 5) {
-                div.style.border ="2px solid red";
+                div.classList.add("less-friends");
             }
 
             div.append(ul);
