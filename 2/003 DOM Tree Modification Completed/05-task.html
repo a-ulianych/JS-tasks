@@ -491,6 +491,12 @@
             for (const friend of user.friends) {
                 ul.insertAdjacentHTML("beforeend", `<li>${friend.name}</li>`);
             }
+
+            function checkFriends() {
+                if (user.friends.length < 5)
+                    div.style.border = "2px solid red";
+            }
+            checkFriends();
             
             div.append(ul);
             return div;
