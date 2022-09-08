@@ -61,6 +61,21 @@
             }
         ];
 
+        let table = document.createElement("table");
+        source.forEach(obj => {
+            let row = document.createElement("tr");
+            let cell = document.createElement("td");
+            let secondCell = document.createElement("td");
+
+            cell.textContent = obj.month;
+            row.append(cell);
+
+            secondCell.textContent = obj.amount;
+            row.append(secondCell);
+
+            table.append(row);
+        });
+        document.body.append(table);
     </script>
 </body>
 
