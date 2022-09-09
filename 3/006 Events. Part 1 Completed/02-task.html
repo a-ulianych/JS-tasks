@@ -6,9 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 02</title>
+    <style>
+        button {
+            display: block;
+            margin: 30px 0 20px;
+        }
+    </style>
 </head>
 
 <body>
+    <p>Радиус цилиндра</p>
+    <input id="input1" type="text">
+
+    <p>Высота цилиндра</p>
+    <input id="input2" type="text">
+
+    <button>Вычислить обьем цилиндра</button>
+
+    <p>Обьем цилиндра</p>
+    <p id="result"></p>
     <script>
         /*
         Задание:
@@ -17,6 +33,16 @@
         Разместите на странице два поля ввода - первое для радиуса цилиндра, второе для высоты цилиндра.
         Объем цилиндра выведите в тело страницы.
         */
+
+        let input1 = document.querySelector("#input1");
+        let input2 = document.querySelector("#input2");
+        let button = document.querySelector("button");
+
+        button.addEventListener("click", () => {
+            let p = document.querySelector("#result");
+            p.textContent = Math.PI * Math.pow(input1.value, 2) * input2.value;
+        });
+
     </script>
 </body>
 
