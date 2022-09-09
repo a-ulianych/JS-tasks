@@ -18,9 +18,9 @@
 </head>
 
 <body>
-    <div></div>
-    <div></div>
-    <div></div>
+    <div id="first"></div>
+    <div id="second"></div>
+    <div id="third"></div>
 
     <script>
         /*
@@ -29,6 +29,28 @@
         красного цвета на соответствующий div. Если зажаты клавиши Ctrl + A, то красная рамка добавляется сразу
         для всех div
         */
+
+        let first = document.querySelector("#first");
+        let second = document.querySelector("#second");
+        let third = document.querySelector("#third");
+        document.addEventListener("keydown", function (e) {
+            switch (e.key) {
+                case "1":
+                    first.style.border = "2px solid red";
+                    break;
+                case "2":
+                    second.style.border = "2px solid red";
+                    break;
+                case "3":
+                    third.style.border = "2px solid red";
+                    break;
+            }
+            if (e.ctrlKey && e.key === "a") {
+                first.style.border = "2px solid red";
+                second.style.border = "2px solid red";
+                third.style.border = "2px solid red";
+            }
+        });
     </script>
 </body>
 
