@@ -11,6 +11,9 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        p {
+            margin-top: 10px;
+        }
         #userList {
             width: 200px;
             display: inline-block;
@@ -154,15 +157,24 @@
         ];
 
         let uslerList = document.querySelector("#userList");
+        let output = document.querySelector("#output");
 
         for (let index = 0; index < users.length; index++) {
             const currentUser = users[index];
             let li = document.createElement("li");
             li.textContent = currentUser.name.first + " " + currentUser.name.last;
             li.addEventListener("mouseenter", mouseEnterHandler);
-            li.dataset.userNumber = index;
+            li.addEventListener("mouseout", mouseOutHandler);
             uslerList.append(li);
+
+            function mouseEnterHandler () {
+                output.innerHTML = `<p>Age: ${currentUser.age}</p> <p>Balance: ${currentUser.balance}}</p> <p>Company: ${currentUser.company}</p> <p>Email: ${currentUser.email}</p>`;
+            }
+            function mouseOutHandler() {
+                output.innerHTML = "";
+            }
         }
+
     </script>
 </body>
 
