@@ -28,6 +28,18 @@
         let div = document.querySelector("#element");
         let distance = 10;
 
+        function addSpeed () {
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Shift")
+                    distance = 20;
+            });
+            document.addEventListener("keyup", (e) => {
+                if (e.key === "Shift")
+                    distance = 10;
+            });
+        }
+        addSpeed();
+
         document.addEventListener("keydown", function (e) {
             switch (e.code) {
                 case "ArrowLeft":
