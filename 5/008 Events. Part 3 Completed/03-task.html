@@ -24,8 +24,8 @@
             btn.addEventListener("click", clickHandler);
         });
 
-        function clickHandler() {
-            alert(this.innerText);
+        function clickHandler(e) {
+            alert(e.target.innerText);
         }
     </script>
 </body>
