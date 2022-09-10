@@ -24,28 +24,28 @@
         Результат работы сценария не должен измениться.
         */
         let input1 = document.querySelector("#input1");
-        let input3 = document.querySelector("#input2");
+        let input2 = document.querySelector("#input2");
+        let btnList = document.querySelectorAll("button");
 
-        let addBtn = document.querySelector("#add-btn");
-        let remBtn = document.querySelector("#rem-btn");
-        let mulBtn = document.querySelector("#mul-btn");
-        let divBtn = document.querySelector("#div-btn");
-
-        addBtn.addEventListener("click", function () {
-            alert(Number(input1.value) + Number(input2.value));
-        });
-
-        remBtn.addEventListener("click", function () {
-            alert(input1.value - input2.value);
-        });
-
-        mulBtn.addEventListener("click", function () {
-            alert(input1.value * input2.value);
-        });
-
-        divBtn.addEventListener("click", function () {
-            alert(input1.value / input2.value);
-        });
+        for (const btn of btnList) {
+            btn.addEventListener("click", handler)
+        }
+        function handler(e) {
+            switch (e.target.id) {
+                case "add-btn":
+                    alert(Number(input1.value) + Number(input2.value));
+                    break;
+                case "rem-btn":
+                    alert(input1.value - input2.value);
+                    break;
+                case "mul-btn":
+                    alert(input1.value * input2.value);
+                    break;
+                case "div-btn":
+                    alert(input1.value / input2.value);
+                    break;
+            }
+        }
     </script>
 </body>
 
