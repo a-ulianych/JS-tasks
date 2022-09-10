@@ -18,7 +18,7 @@
 <body>
     Операнд 1: <input id="input1" type="text"> <br />
     <span id="input1Error" class="error">Введите значение</span> <br />
-    
+
     Операнд 2: <input id="input2" type="text"> <br />
     <span id="input2Error" class="error">Введите значение</span> <br />
 
@@ -40,27 +40,87 @@
         input2 сделайте, в случае ошибки, #input2Error видимым.
         */
         let input1 = document.querySelector("#input1");
-        let input3 = document.querySelector("#input2");
+        let input2 = document.querySelector("#input2");
 
         let addBtn = document.querySelector("#add-btn");
         let remBtn = document.querySelector("#rem-btn");
         let mulBtn = document.querySelector("#mul-btn");
         let divBtn = document.querySelector("#div-btn");
 
+        let error1 = document.querySelector("#input1Error");
+        let error2 = document.querySelector("#input2Error");
+        let resetBtn = document.querySelector("#reset-btn");
+        resetBtn.addEventListener("click", () => {
+            input1.value = "0";
+            input2.value = "0";
+        });
+
         addBtn.addEventListener("click", function () {
-            alert(Number(input1.value) + Number(input2.value));
+            let check= true;
+            if (input1.value === "") {
+                error1.style.display = "block";
+                input1.style.border = "1px solid red";
+                check = false;
+            }
+            if (input2.value === "") {
+                error2.style.display = "block";
+                input2.style.border = "1px solid red";
+                check = false;
+            }
+            if (check) {
+                alert(Number(input1.value) + Number(input2.value));
+            }
         });
 
         remBtn.addEventListener("click", function () {
-            alert(input1.value - input2.value);
+            let check= true;
+            if (input1.value === "") {
+                error1.style.display = "block";
+                input1.style.border = "1px solid red";
+                check = false;
+            }
+            if (input2.value === "") {
+                error2.style.display = "block";
+                input2.style.border = "1px solid red";
+                check = false;
+            }
+            if (check) {
+                alert(input1.value - input2.value);
+            }
         });
 
         mulBtn.addEventListener("click", function () {
-            alert(input1.value * input2.value);
+            let check= true;
+            if (input1.value === "") {
+                error1.style.display = "block";
+                input1.style.border = "1px solid red";
+                check = false;
+            }
+            if (input2.value === "") {
+                error2.style.display = "block";
+                input2.style.border = "1px solid red";
+                check = false;
+            }
+            if (check) {
+                alert(input1.value * input2.value);
+            }
         });
 
         divBtn.addEventListener("click", function () {
-            alert(input1.value / input2.value);
+            let check= true;
+            if (input1.value === "") {
+                error1.style.display = "block";
+                input1.style.border = "1px solid red";
+                check = false;
+            }
+            if (input2.value === "") {
+                error2.style.display = "block";
+                input2.style.border = "1px solid red";
+                check = false;
+            }
+            if (check) {
+                alert(input1.value / input2.value);
+            }
         });
     </script>
 </body>
