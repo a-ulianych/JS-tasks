@@ -26,6 +26,7 @@
 
         .task {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             border: 1px solid gray;
             padding: 3px 8px;
@@ -98,8 +99,13 @@
             let p = document.createElement("p");
             p.innerText = text;
 
+            let delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.addEventListener("click", () => delBtn.parentElement.remove());
+
             div.append(input);
             div.append(p);
+            div.append(delBtn);
 
             return div;
         }
