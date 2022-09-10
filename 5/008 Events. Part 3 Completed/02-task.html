@@ -157,25 +157,28 @@
         ];
 
         let uslerList = document.querySelector("#userList");
+        let output = document.querySelector("#output");
 
         for (let index = 0; index < users.length; index++) {
             const currentUser = users[index];
             let li = document.createElement("li");
             li.textContent = currentUser.name.first + " " + currentUser.name.last;
-            li.addEventListener("click", mouseEnterHandler); /*!!!*/
             li.dataset.userNumber = index;
             uslerList.append(li);
         }
 
-        function mouseEnterHandler() { 
-            const currentUser = users[this.dataset.userNumber];
+        uslerList.addEventListener("mouseover", mouseEnterHandler);
+        uslerList.addEventListener("mouseout", () => output.innerHTML = "");
+
+        function mouseEnterHandler(e) {
+            const currentUser = users[e.target.dataset.userNumber];
             let message = "";
             message += "Company " + currentUser.company + "<br />";
             message += "Balance " + currentUser.balance + "<br />";
             message += "Email " + currentUser.email + "<br />";
             message += "Age " + currentUser.age + "<br />";
 
-            document.querySelector("#output").innerHTML = message;
+            output.innerHTML = message;
         }
     </script>
 </body>
