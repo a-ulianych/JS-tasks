@@ -33,10 +33,20 @@
         редактирование значения свойства html напрямую.
         */
 
-        function Car(image, manufacturer) {
-            this.image = image;
-            this.manufacturer = manufacturer;
-            this.html = `<img src="images/${this.image}" /><br />Производитель: ${this.manufacturer}<br />`;
+        class Car {
+            #image;
+            #manufacturer;
+            #html;
+
+            constructor(image, manufacturer) {
+                this.#image = image;
+                this.#manufacturer = manufacturer;
+                this.#html = `<img src="images/${this.#image}" /><br />Производитель: ${this.#manufacturer}<br />`;
+            }
+
+            get getHtml() {
+                return this.#html;
+            }
         }
 
         let car1 = new Car("audi-a6-250.jpg", "Audi");
@@ -47,9 +57,9 @@
         let placeholder2 = document.querySelector("#placeholder2");
         let placeholder3 = document.querySelector("#placeholder3");
 
-        placeholder1.innerHTML = car1.html;
-        placeholder2.innerHTML = car2.html;
-        placeholder3.innerHTML = car3.html;
+        placeholder1.innerHTML = car1.getHtml;
+        placeholder2.innerHTML = car2.getHtml;
+        placeholder3.innerHTML = car3.getHtml;
     </script>
 </body>
 
