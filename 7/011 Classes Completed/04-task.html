@@ -61,6 +61,10 @@
             padding-left: 4px;
             width: 68%;
         }
+
+        .sort {
+            width: 500px;
+        }
     </style>
 </head>
 
@@ -71,6 +75,10 @@
     </div>
     <div class="task-list">
         <p id="start-message">Нет новых задач</p>
+    </div>
+    <div class="sort">
+        <button id="show-incomplete">Показать не завершенные задачи</button>
+        <button id="show-all">Показать все</button>
     </div>
 
     <script>
@@ -90,6 +98,32 @@
         let startMessage = document.querySelector("#start-message");
         let taskList = document.querySelector(".task-list");
         let tasks = [];
+
+        let incomplete = document.querySelector("#show-incomplete");
+        let all = document.querySelector("#show-all");
+
+        function clearAllTasks() {
+            while(taskList.firstChild) {
+                taskList.removeChild(taskList.lastChild);
+            }
+        }
+
+        incomplete.addEventListener("click", () => {
+            clearAllTasks();
+
+            tasks.forEach(task => {
+               if (!task.isDone) {
+                   task.createIn(taskList);
+               }
+            });
+        });
+        all.addEventListener("click", () => {
+            clearAllTasks();
+
+            tasks.forEach(task => {
+                task.createIn(taskList);
+            });
+        });
 
         addTaskButton.addEventListener("click", addTaskHandler);
 
@@ -123,6 +157,7 @@
                 this.div.classList.add("task");
 
                 let input = document.createElement("input");
+                this.checkState();
                 input.addEventListener("click", () => this.changeState(this.div));
                 input.type = "checkbox";
 
@@ -134,11 +169,18 @@
                 element.append(this.div);
             }
 
+            checkState() {
+                if (this.isDone) {
+                    this.div.classList.add("completed");
+                }
+            }
+
             changeState(element) {
                 this.isDone = !this.isDone;
                 element.classList.toggle("completed");
             }
         }
+
     </script>
 </body>
 
