@@ -9,14 +9,41 @@
 </head>
 
 <body>
-    <script>
-        /*
-        Задание:
-        Создайте функцию showWithDelay(массив);
-        Метод принимает массив и на консоль по очереди выводит каждый элемент массива с интервалом в одну секунду
-        Сделайте два варианта с setInterval и setTimeout
-        */
-    </script>
+<script>
+    /*
+    Задание:
+    Создайте функцию showWithDelay(массив);
+    Метод принимает массив и на консоль по очереди выводит каждый элемент массива с интервалом в одну секунду
+    Сделайте два варианта с setInterval и setTimeout
+    */
+
+    let array = [1, 2, "Hello", "world", 100, 500, {}];
+
+    // setTimeout
+    function showWithDelay2(array) {
+        array.forEach((item, i) => {
+            setTimeout(() => {
+                console.log(item);
+            }, (i + 1) * 1000)
+        });
+    }
+    showWithDelay2(array);
+
+    // setInterval
+    // function showWithDelay(array) {
+    //     let index = 0;
+    //     let timerId = setInterval(() => showArray(), 1000);
+    //
+    //     function showArray() {
+    //         if (index < array.length) {
+    //             console.log(array[index]);
+    //             index++;
+    //         }
+    //         else clearInterval(timerId);
+    //     }
+    // }
+    // showWithDelay(array);
+</script>
 </body>
 
 </html>
