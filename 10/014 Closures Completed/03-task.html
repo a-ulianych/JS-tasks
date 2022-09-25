@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <p>
+    <p id="colored-paragraph">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita nemo nam amet velit ut explicabo nisi voluptas
         dicta ad, autem, id asperiores rem corporis esse. Dignissimos dicta facilis eaque mollitia.
     </p>
@@ -24,9 +24,9 @@
     <a href="#" id="size-24">24</a>
     <a href="#" id="size-32">32</a>
 
-    <a href="#" id="">red</a>
-    <a href="#" id="">green</a>
-    <a href="#" id="">blue</a>
+    <a href="#" id="red-color">red</a>
+    <a href="#" id="green-color">green</a>
+    <a href="#" id="blue-color">blue</a>
 
     <script>
         /*
@@ -48,6 +48,20 @@
         document.querySelector("#size-16").onclick = size16;
         document.querySelector("#size-24").onclick = size24;
         document.querySelector("#size-32").onclick = size32;
+
+        function changeColor(color) {
+            return function () {
+                document.querySelector("#colored-paragraph").style.color = color;
+            }
+        }
+
+        let redColor = changeColor("red");
+        let greenColor = changeColor("green");
+        let blueColor = changeColor("blue");
+
+        document.querySelector("#red-color").addEventListener("click", () => redColor());
+        document.querySelector("#green-color").addEventListener("click", () => greenColor());
+        document.querySelector("#blue-color").addEventListener("click", () => blueColor());
     </script>
 </body>
 
