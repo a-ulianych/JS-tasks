@@ -56,8 +56,14 @@
 
         <div class="form-group">
             <label for="price">Валюта</label>
-            <input type="radio" id="currency" name="currency" value="USD" checked> USD
-            <input type="radio" id="currency" name="currency" value="EUR"> EUR
+            <select name="currency">
+                <option value="USD" selected>U.S. Dollar</option>
+                <option value="CZK">Czech crown</option>
+                <option value="UAH">Ukrainian Hryvnia</option>
+                <option value="EUR">Euro</option>
+                <option value="PLN">Polish Zloty</option>
+                <option value="CHF">Swiss Franc</option>
+            </select>
         </div>
         <br>
         <input id="saveButton" type="button" value="Сохранить">
@@ -72,7 +78,7 @@
         Задание:
         Поменяйте radio на select с вариантами валют -
         value - USD, текст для пользователя - U.S. Dollar
-        value - RUB, текст для пользователя - Russian Ruble
+        value - CZK, текст для пользователя - Russian Ruble
         value - UAH, текст для пользователя - Ukrainian Hryvnia
         value - EUR, текст для пользователя - Euro
         value - PLN, текст для пользователя - Polish Zloty
