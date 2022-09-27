@@ -15,6 +15,10 @@
             width: 75px;
             display: inline-block;
         }
+
+        .hint {
+            display: none;
+        }
     </style>
 </head>
 
@@ -45,7 +49,25 @@
         */
 
         let form = document.forms[0];
-        form.addEventListener("submit", () => alert(`login = ${form.login.value}\ password = ${form.password.value}`));
+        form.addEventListener("submit", () => alert(`login = ${form.login.value} \npassword = ${form.password.value}`));
+
+        function showHint(hint) {
+            hint.style.display = "inline";
+        }
+
+        function hideHint(hint) {
+            hint.style.display = "none";
+        }
+
+        let loginForm = form.login;
+        let loginHint = document.querySelector("#loginHint");
+        loginForm.addEventListener("focus", () => showHint(loginHint));
+        loginForm.addEventListener("blur", () => hideHint(loginHint));
+
+        let passwordForm = form.password;
+        let passwordHint = document.querySelector("#passwordHint");
+        passwordForm.addEventListener("focus", () => showHint(passwordHint));
+        passwordForm.addEventListener("blur", () => hideHint(passwordHint));
     </script>
 </body>
 
