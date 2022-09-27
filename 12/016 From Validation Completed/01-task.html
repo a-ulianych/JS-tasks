@@ -43,6 +43,9 @@
         2. В момент, когда поле ввода login получает фокус, покажите подсказку, которая находится в span#loginHint
            В момент, когда фокус получает поле ввода password - подсказку span#passwordHint
         */
+
+        let form = document.forms[0];
+        form.addEventListener("submit", () => alert(`login = ${form.login.value}\ password = ${form.password.value}`));
     </script>
 </body>
 
