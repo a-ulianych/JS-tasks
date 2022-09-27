@@ -84,6 +84,8 @@
             <input type="number" name="age" id="age">
         </div>
         <input type="button" value="Save" id="saveButton">
+        <input type="reset" value="Очистить форму" id="clearFormBtn">
+        <input type="button" value="Удалить" id="deleteElemBtn">
     </form>
     <script>
         /*
@@ -204,12 +206,18 @@
             constructor(data, listElement, displayFn) {
                 this.data = data;
                 this.listElement = listElement;
+                this.displayFn = displayFn;
 
-                for (let index = 0; index < data.length; index++) {
-                    const currentData = data[index];
-                    
+                this.update();
+            }
+
+            update() {
+                this.listElement.innerHTML = "";
+                for (let index = 0; index < this.data.length; index++) {
+                    const currentData = this.data[index];
+
                     let li = document.createElement("li");
-                    li.textContent = displayFn(currentData);
+                    li.textContent = this.displayFn(currentData);
                     li.dataset.index = index;
 
                     this.listElement.append(li);
@@ -217,9 +225,14 @@
             }
 
             select(id) {
+                this.id = id;
                 this.selectedData = this.data[id];
                 this.deselectAll();
                 this.listElement.children[id].classList.add("selected");
+            }
+
+            delete() {
+                this.data.splice(this.id, 1);
             }
 
             deselectAll() {
@@ -265,6 +278,7 @@
 
         let listService = new ListService(users, userList, x => x.name.first + " " + x.name.last);
         let formService = new UserFormService(document.forms[0]);
+        let deleteBtn = document.querySelector("#deleteElemBtn");
 
         userList.addEventListener("click", function (e) {
             if (e.target.tagName != "LI") return;
@@ -276,6 +290,12 @@
 
         saveButton.addEventListener("click", function () {
             formService.saveForm();
+        });
+
+        deleteBtn.addEventListener("click", () => {
+            listService.delete();
+            listService.update();
+            document.forms[0].reset();
         });
     </script>
 </body>
