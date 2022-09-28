@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <label>Номер кредитной карты</label>
-            <input type="text" name="creditCard">
+            <input type="text" name="creditCard" data-val="true" data-required="Введите номер кредитной карты" data-error-label="creditCardErrorLabel" data-pattern="\d{16}" maxlength="16" placeholder="ХХХХ ХХХХ ХХХХ ХХХХ">
             <span class="error" id="creditCardErrorLabel">Ошибка</span>
         </div>
         <div class="form-group">
@@ -67,7 +67,7 @@
         /*
         Задание:
         Применяя подход, реализованный в данном сценарии, добавьте валидацию для поля ввода
-        "Номер кредитной карты". Поле ввода должно содержать значение в формате 
+        "Номер кредитной карты". Поле ввода должно содержать значение в формате
         ХХХХ ХХХХ ХХХХ ХХХХ где X - это число от 0 до 9
 
         Пример создания регулярного выражения в коде:
