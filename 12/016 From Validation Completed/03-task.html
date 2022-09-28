@@ -28,68 +28,82 @@
         input:invalid {
             border: 1px solid red;
         }
+
+        .hint {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <form>
-        <div class="form-group">
-            <label>Имя</label>
-            <input type="text" name="firstNameInput" required>
-        </div>
-        <div class="form-group">
-            <label>Фамилия</label>
-            <input type="text" name="lastNameInput" required>
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="emailInput" required>
-        </div>
-        <div class="form-group">
-            <label>Пароль</label>
-            <input type="password" name="passwordInput" required minlength="6" maxlength="16">
-        </div>
-        <div class="form-group">
-            <label>Подтверждение пароля</label>
-            <input type="password" name="passwordConfirmInput" required minlength="6" maxlength="16">
-        </div>
-        <div class="form-group">
-            <input type="checkbox" name="acceptedInput" required>
-            <label class="inline">Согласен с условиями использования</label>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Зарегистрироваться">
-        </div>
-    </form>
+<form>
+    <div class="form-group">
+        <label>Имя</label>
+        <input type="text" name="firstNameInput" required>
+    </div>
+    <div class="form-group">
+        <label>Фамилия</label>
+        <input type="text" name="lastNameInput" required>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="emailInput" required>
+        <span id="emailHint" class="hint">Email не должен содержать значения <b>admin@example.com</b>, <b>superuser@example.com</b> и <b>user@example.com</b></span>
+    </div>
+    <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" name="passwordInput" required minlength="6" maxlength="16">
+    </div>
+    <div class="form-group">
+        <label>Подтверждение пароля</label>
+        <input type="password" name="passwordConfirmInput" required minlength="6" maxlength="16">
+    </div>
+    <div class="form-group">
+        <input type="checkbox" name="acceptedInput" required>
+        <label class="inline">Согласен с условиями использования</label>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Зарегистрироваться">
+    </div>
+</form>
 
+<script>
+    const form = document.forms[0];
 
-    <script>
-        const form = document.forms[0];
+    form.addEventListener("submit", function (e) {
+        alert("Форма отправлена");
+    });
 
-        form.addEventListener("submit", function (e) {
-            alert("Форма отправлена");
-        });
+    form.passwordConfirmInput.addEventListener("input", function () {
+        if (form.passwordConfirmInput.value != form.passwordInput.value) {
+            form.passwordConfirmInput.setCustomValidity("Пароль и подтверждение пароля не совпадают.");
+            form.passwordInput.setCustomValidity("Пароль и подтверждение пароля не совпадают.");
+        } else {
+            form.passwordConfirmInput.setCustomValidity("");
+            form.passwordInput.setCustomValidity("");
+        }
+    });
 
-        form.passwordConfirmInput.addEventListener("input", function () {
-            if (form.passwordConfirmInput.value != form.passwordInput.value) {
-                form.passwordConfirmInput.setCustomValidity("Пароль и подтверждение пароля не совпадают.");
-                form.passwordInput.setCustomValidity("Пароль и подтверждение пароля не совпадают.");
-            }
-            else {
-                form.passwordConfirmInput.setCustomValidity(""); 
-                form.passwordInput.setCustomValidity("");
-            }
-        });
+    let emailHint = document.querySelector("#emailHint");
+    form.emailInput.addEventListener("input", () => {
+        if (form.emailInput.value === "admin@example.com" || form.emailInput.value === "superuser@example.com" || form.emailInput.value === "user@example.com") {
+            emailHint.style.display = "inline";
+            form.emailInput.setCustomValidity("Неправильный email-адрес");
+        } else {
+            emailHint.style.display = "none";
+            form.emailInput.setCustomValidity("");
+        }
+    });
 
-        /*
-        Задание:
-        Доработайте валидацию формы. Поле ввода Email не должно содержать значения
-        admin@example.com, superuser@example.com и user@example.com
-        Во время ввода значений в поле ввода email выполняйте проверку введенного значения и если
-        значение совпадает с запрещенным, выводите сообщение об этом рядом с полем ввода.
-        Проверку выполняйте на событие input
-        */
-    </script>
+    /*
+    Задание:
+    Доработайте валидацию формы. Поле ввода Email не должно содержать значения
+    admin@example.com, superuser@example.com и user@example.com
+    Во время ввода значений в поле ввода email выполняйте проверку введенного значения и если
+    значение совпадает с запрещенным, выводите сообщение об этом рядом с полем ввода.
+    Проверку выполняйте на событие input
+    */
+</script>
 </body>
 
 </html>
