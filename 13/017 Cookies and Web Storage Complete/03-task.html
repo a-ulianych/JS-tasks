@@ -16,12 +16,19 @@
             width: 75px;
             display: inline-block;
         }
+
+        table {
+            border: 2px solid black;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
-
-
     <form name="writeForm">
         <div class="form-group">
             <label>Ключ</label>
@@ -44,9 +51,20 @@
             <input type="text" name="keyInput" required>
         </div>
         <div class="form-group">
-            <input type="submit" value="Чтение">
+            <input type="submit" value="Чтение" id="read">
         </div>
     </form>
+
+    <div class="form-group">
+        <input type="button" value="Показать всё" id="showAllBtn">
+    </div>
+    <div class="form-group">
+        <input type="button" value="Очистить localStorage" id="clearLocalBtn">
+    </div>
+    <div class="form-group">
+        <table id="local-storage-table" hidden>
+        </table>
+    </div>
 
     <script>
         /*
@@ -63,18 +81,56 @@
             let key = form.keyInput.value;
             let value = form.valueInput.value;
 
-            localStorage.setItem(key, value); 
+            localStorage.setItem(key, value);
+
+            clickFlag = true;
+
             form.reset();
         });
-
         document.forms.readForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
             const form = document.forms.readForm;
             let key = form.keyInput.value;
 
-            let value = localStorage.getItem(key); 
+            let value = localStorage.getItem(key);
             alert(value);
+        });
+
+        let showAllBtn = document.querySelector("#showAllBtn");
+        let clearLocalBtn = document.querySelector("#clearLocalBtn");
+        let table = document.querySelector("#local-storage-table");
+
+        let clickFlag;
+        if (localStorage.length > 0) clickFlag = true;
+
+        showAllBtn.addEventListener("click", () => {
+            if (clickFlag) {
+                table.innerHTML = "";
+                for (let i = 0; i < localStorage.length; i++) {
+                    let tr = document.createElement("tr");
+                    let keyTd = document.createElement("td");
+                    let valueTd = document.createElement("td");
+
+                    let key = localStorage.key(i);
+
+                    keyTd.textContent = key;
+                    valueTd.textContent = localStorage.getItem(key);
+
+                    tr.append(keyTd);
+                    tr.append(valueTd);
+
+                    table.append(tr);
+                    table.removeAttribute("hidden");
+
+                    clickFlag = false;
+                }
+            }
+        });
+
+        clearLocalBtn.addEventListener("click", () => {
+            table.innerHTML = "";
+            table.setAttribute("hidden", "");
+            localStorage.clear();
         });
     </script>
 </body>
