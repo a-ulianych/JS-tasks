@@ -9,13 +9,20 @@
 </head>
 
 <body>
-    <textarea rows="10" cols="30"></textarea>
+    <textarea rows="10" cols="30" id="textarea"></textarea>
     <script>
         /*
         Задание:
         Сделайте так чтобы значение, введенное в поле ввода на данной странице, сохранялось при каждом изменении.
         Когда пользователь повторно зайдет на эту страницу, поле ввода должно содержать последнее введенное значение.
         */
+        let textArea = document.querySelector("#textarea");
+
+        document.addEventListener("DOMContentLoaded", () => textArea.value = localStorage.getItem("text"));
+        textArea.addEventListener("input", () => {
+            localStorage.setItem("text", textArea.value);
+            console.log(localStorage);
+        });
     </script>
 </body>
 
