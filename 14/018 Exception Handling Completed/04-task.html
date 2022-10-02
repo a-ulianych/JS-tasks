@@ -17,13 +17,26 @@
         Добавьте код, обрабатывающий исключение.
         */
 
+        class DivideByZeroError extends Error {
+            constructor(argumentName) {
+                super(`Аргумент с именем ${argumentName} содержит значение 0.`);
+                this.name = "Деление на ноль";
+            }
+
+        }
+
         function divide(operand1, operand2) {
+            if (operand2 === 0) throw new DivideByZeroError("operand2");
             return operand1 / operand2;
         }
 
-        console.log(divide(10, 5));
-        console.log(divide(100, 0));
-        console.log(divide(1000, 50));
+        try {
+            console.log(divide(10, 5));
+            console.log(divide(100, 0));
+            console.log(divide(1000, 50));
+        } catch (error) {
+            console.log(error.message);
+        }
     </script>
 </body>
 
