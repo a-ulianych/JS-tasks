@@ -194,6 +194,9 @@
                 email: 'newman.wynn@visalia.name'
             }
         ];
+        localStorage.setItem("users", JSON.stringify(users));
+        let data = JSON.parse(localStorage.getItem("users"));
+        console.log(data);
 
         // класс для вывода информации в UL
         class ListService {
