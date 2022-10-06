@@ -94,7 +94,7 @@
         */
         let users = [
             {
-                balance: '1250.89',
+                balance: '1250',
                 age: 24,
                 name: {
                     first: 'Golden',
@@ -104,7 +104,7 @@
                 email: 'golden.clements@ewaves.io'
             },
             {
-                balance: '3637.94',
+                balance: '3637',
                 age: 23,
                 name: {
                     first: 'Francis',
@@ -114,7 +114,7 @@
                 email: 'francis.hebert@xplor.biz'
             },
             {
-                balance: '1106.44',
+                balance: '1106',
                 age: 31,
                 name: {
                     first: 'Hale',
@@ -124,7 +124,7 @@
                 email: 'hale.cross@earthpure.us'
             },
             {
-                balance: '2502.43',
+                balance: '2502',
                 age: 25,
                 name: {
                     first: 'Delores',
@@ -134,7 +134,7 @@
                 email: 'delores.sykes@assitia.com'
             },
             {
-                balance: '3651.54',
+                balance: '3651',
                 age: 21,
                 name: {
                     first: 'Ryan',
@@ -144,7 +144,7 @@
                 email: 'ryan.bolton@moltonic.biz'
             },
             {
-                balance: '1345.79',
+                balance: '1345',
                 age: 21,
                 name: {
                     first: 'Carey',
@@ -154,7 +154,7 @@
                 email: 'carey.schwartz@uxmox.info'
             },
             {
-                balance: '3261.11',
+                balance: '3261',
                 age: 30,
                 name: {
                     first: 'Trevino',
@@ -164,7 +164,7 @@
                 email: 'trevino.mullins@terrasys.org'
             },
             {
-                balance: '1659.17',
+                balance: '1659',
                 age: 20,
                 name: {
                     first: 'Gilliam',
@@ -174,7 +174,7 @@
                 email: 'gilliam.mendez@zenthall.tv'
             },
             {
-                balance: '2340.54',
+                balance: '2340',
                 age: 32,
                 name: {
                     first: 'Brewer',
@@ -184,7 +184,7 @@
                 email: 'brewer.vargas@qimonk.co.uk'
             },
             {
-                balance: '1736.91',
+                balance: '1736',
                 age: 24,
                 name: {
                     first: 'Newman',
@@ -194,11 +194,15 @@
                 email: 'newman.wynn@visalia.name'
             }
         ];
-        localStorage.setItem("users", JSON.stringify(users));
-        let data = JSON.parse(localStorage.getItem("users"));
-        console.log(data);
+        let usersWork; // с этим массивом будем работать, оригинальный не будет затронут
 
-        // класс для вывода информации в UL
+        if (localStorage.getItem("afterUsers") != null) { // проверяю есть ли в сторедже значение с последними изменениями в списке юзеров
+            usersWork = JSON.parse(localStorage.getItem("afterUsers")); // если есть, то работаем с этим массивом
+        } else {
+            localStorage.setItem("beforeUsers", JSON.stringify(users)); // если нет, то переносим оригинальный массив в сторедж
+            usersWork = JSON.parse(localStorage.getItem("beforeUsers")); // потом достаем (копируем) его в переменную с которой будем работать
+        }
+
         class ListService {
             selectedData;
             data;
@@ -207,13 +211,18 @@
             constructor(data, listElement, displayFn) {
                 this.data = data;
                 this.listElement = listElement;
+                this.displayFunc = displayFn;
+                this.reFillList();
+            }
 
-                for (let index = 0; index < data.length; index++) {
-                    const currentData = data[index];
+            reFillList(){ // функция для обновления списка li
+                this.listElement.innerHTML = "";
+                for (let index = 0; index < this.data.length; index++) {
+                    const currentData = this.data[index];
 
                     let li = document.createElement("li");
-                    li.textContent = displayFn(currentData);
-                    currentData.id = index; // для каждого пользователя указываем id, который совпадает с id в разметке
+                    li.textContent = this.displayFunc(currentData);
+                    currentData.id = index;
                     li.dataset.id = index;
 
                     this.listElement.append(li);
@@ -235,17 +244,17 @@
                 }
             }
 
-            // удаление данных из разметки и массива
+
             deleteSelectedItem() {
                 const index = this.data.indexOf(this.selectedData);
                 if (index != -1) {
                     this.listElement.children[index].remove();
                     this.data.splice(index, 1);
+                    localStorage.setItem("afterUsers", JSON.stringify(usersWork)); // отправляю в сторедж последние изменения после удаления
                 }
             }
         }
 
-        // Класс для работы с формой, редактирующей информацию о пользователе
         class UserFormService {
             currentUser;
             form;
@@ -272,9 +281,10 @@
                 this.currentUser.balance = this.form.balance.value;
                 this.currentUser.email = this.form.email.value;
                 this.currentUser.age = this.form.age.value;
+                localStorage.setItem("afterUsers", JSON.stringify(usersWork)); // отправляю в сторедж последние изменения
             }
 
-            // очистка формы
+
             resetForm() {
                 this.form.reset();
             }
@@ -284,23 +294,25 @@
         let saveButton = document.querySelector("#saveButton");
         let deleteButton = document.querySelector("#deleteButton");
 
-        let listService = new ListService(users, userList, x => x.name.first + " " + x.name.last);
+        let listService = new ListService(usersWork, userList, x => x.name.first + " " + x.name.last); // сюда первым аргументом уже передаю массив, с которым будем работать
+        // он может содержать или начальные значения массива юзеров или те, которые были в сторедже, всё это зависит от того делали ли раньше изменения или нет
         let formService = new UserFormService(document.forms[0]);
 
         userList.addEventListener("click", function (e) {
             if (e.target.tagName != "LI") return;
-
             const userNumber = e.target.dataset.id;
             listService.select(userNumber);
             formService.fillForm(listService.selectedData);
         });
 
+
         document.forms[0].addEventListener("submit", function (e) {
-            formService.saveForm();
             e.preventDefault();
+            formService.saveForm();
+            listService.reFillList(); // вызываю обновление списка li
         });
 
-        // удаляем и очищаем форму
+
         deleteButton.addEventListener("click", function () {
             listService.deleteSelectedItem();
             formService.resetForm();
