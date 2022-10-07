@@ -84,9 +84,12 @@
         */
 
         class Task {
+            static taskId = -1;
+
             constructor(text) {
                 this.text = text;
                 this.isDone = false;
+                Task.taskId++;
             }
         }
 
@@ -103,6 +106,14 @@
 
             add(task) {
                 this.tasks.push(task);
+                this.save();
+            },
+
+            delete(task) {
+                let index = this.tasks.indexOf(task);
+                if (index > -1) {
+                    this.tasks.splice(index, 1);
+                }
                 this.save();
             },
 
@@ -156,9 +167,11 @@
         }
 
         class TaskView {
+
             constructor(task) {
                 this.task = task;
                 this.div = null;
+
             }
 
             createIn(element) {
@@ -172,8 +185,12 @@
                 let p = document.createElement("p");
                 p.innerText = this.task.text;
 
+                let button = document.createElement("button");
+                button.textContent = "Удалить";
+                button.addEventListener("click", this.deleteTask.bind(this));
                 this.div.append(input);
                 this.div.append(p);
+                this.div.append(button);
 
                 if (this.task.isDone) {
                     this.div.classList.add("completed");
@@ -182,10 +199,16 @@
                 element.append(this.div);
             }
 
+
             changeState(element) {
                 this.task.isDone = !this.task.isDone;
                 dataService.save();
                 this.div.classList.toggle("completed");
+            }
+
+            deleteTask() {
+                dataService.delete(this.task);
+                this.div.remove();
             }
         }
 
