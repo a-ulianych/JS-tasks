@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <button>Скачать</button>
+    <button id="download">Скачать</button>
     <script>
         /*
         Задание:
@@ -24,6 +24,23 @@
                 setTimeout(() => resolve("downloaded data"), random);
             });
         }
+
+        document.querySelector("#download").addEventListener("click", () => {
+            let promises = [
+                download(),
+                download(),
+                download(),
+                download(),
+                download(),
+            ];
+
+            Promise.all(promises)
+                .then(() => console.log("Все файлы скачаны"))
+                .catch(error => {
+                    console.error(error.message);
+                    console.log("Файлы не скачаны");
+                });
+        });
     </script>
 </body>
 
