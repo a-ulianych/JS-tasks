@@ -84,6 +84,8 @@
         Добавьте логику обработки статус кодов ошибок клиента и серверной стороны.
         Предусмотрите обработку и вывод исключений связанных с другими проблемами при сетевых запросах
         */
+
+
         class Task {
             constructor(text) {
                 this.text = text;
@@ -92,34 +94,72 @@
         }
 
         let dataService = {
-            url: "https://jsonplaceholder.typicode.com/todos",
+            url:  "https://jsonplaceholder.typicode.com/todos",
 
             get allTasks() {
                 return fetch(this.url)
-                    .then(response => response.json())
-                    .then(json => this.mapArray(json));
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                        }
+                    })
+                    .then(json => this.mapArray(json))
+                    .catch(error => console.error(error.message));
             },
 
             get notCompletedTasks() {
                 return fetch(this.url + "?completed=false")
-                    .then(response => response.json())
-                    .then(json => this.mapArray(json));
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                        }
+                    })
+                    .then(json => this.mapArray(json))
+                    .catch(error => console.error(error.message));
             },
 
             add(task) {
                 return fetch(this.url, {
                     method: "POST",
-                    body: JSON.stringify({ title: task.text, completed: task.isDone })
+                    body: JSON.stringify({title: task.text, completed: task.isDone}),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    }
                 })
-                    .then(response => response.json());
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                        }
+                    })
+                    .catch(error => console.error(error.message));
             },
 
             update(task) {
                 return fetch(this.url + "/" + task.id, {
                     method: "PUT",
-                    body: JSON.stringify({ title: task.text, completed: task.isDone })
+                    body: JSON.stringify({ title: task.text, completed: task.isDone }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    }
                 })
-                    .then(response => response.json());
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                        }
+                    })
+                    .catch(error => console.error(error.message));
             },
 
             mapArray(array) {
