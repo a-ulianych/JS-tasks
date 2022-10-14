@@ -9,28 +9,95 @@
 </head>
 
 <body>
-    <script>
-        /*
-        Задание:
-        Напишите сценарий, который будет обновлять сущность post со свойствами
-        id: 1,
-        title: 'foo',
-        body: 'bar',
-        userId: 1,
+<label for="title">Type title value</label>
+<input id="title" type="text">
 
-        Создайте форму с полем ввода для значения свойства title и полем ввода для значения свойства body
+<label for="body">Type body value</label>
+<input id="body" type="text">
 
-        Значения для свойств title и body получите от пользователя
-        Значения id и userId должны остаться равными 1 и выводить их в форме не нужно.
-        При загрузке сценария заполните форму данными получеными при обработке GET запроса на https://jsonplaceholder.typicode.com/posts/1
+<button id="newTaskBtn">Create task</button>
 
-        адрес для отправки запроса
-        https://jsonplaceholder.typicode.com/posts/1
+<div id="output"></div>
 
-        для обновления сущности воспользуйтесь PUT запросом https://jsonplaceholder.typicode.com/posts/1. Обработайте ответ
-        и выведите информацию о ошибке или об успешно завершенной операции.
-        */
-    </script>
+<script>
+    /*
+    Задание:
+    Напишите сценарий, который будет обновлять сущность post со свойствами
+    id: 1,
+    title: 'foo',
+    body: 'bar',
+    userId: 1,
+
+    Создайте форму с полем ввода для значения свойства title и полем ввода для значения свойства body
+
+    Значения для свойств title и body получите от пользователя
+    Значения id и userId должны остаться равными 1 и выводить их в форме не нужно.
+    При загрузке сценария заполните форму данными получеными при обработке GET запроса на https://jsonplaceholder.typicode.com/posts/1
+
+    адрес для отправки запроса
+    https://jsonplaceholder.typicode.com/posts/1
+
+    для обновления сущности воспользуйтесь PUT запросом https://jsonplaceholder.typicode.com/posts/1. Обработайте ответ
+    и выведите информацию о ошибке или об успешно завершенной операции.
+    */
+
+    let bodyInput = document.querySelector("#body");
+    let titleInput = document.querySelector("#title");
+    let newTaskBtn = document.querySelector("#newTaskBtn");
+    let output = document.querySelector("#output");
+    let url = "https://jsonplaceholder.typicode.com/posts/1";
+    let post = {};
+
+    function showJson(json) {
+        output.innerHTML = `<p>ID: ${json.id}</p>
+                <p>UserId: ${json.userId}</p>
+                <p>Body: ${json.body}</p>
+                <p>Title: ${json.title}</p>`;
+    }
+
+    fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.log(response.status);
+            }
+        })
+        .then(json => {
+            post = json;
+            showJson(json);
+        })
+        .catch(error => console.error(error.message));
+
+    newTaskBtn.addEventListener("click", () => {
+        if (bodyInput.value) {
+            post.body = bodyInput.value;
+
+        }
+        if (titleInput.value) {
+            post.title = titleInput.value;
+        }
+
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(post),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log(response.status);
+                }
+            })
+            .then(json => {
+                showJson(json);
+            })
+            .catch(error => console.error(error.message));
+    });
+</script>
 </body>
 
 </html>
